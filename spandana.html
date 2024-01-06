@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Finance App</title>
+</head>
+<body>
+    <h1>Ethflow App</h1>
+
+    <label for="depositAmount">Deposit Amount:</label>
+    <input type="text" id="depositAmount" placeholder="Enter amount">
+    <button onclick="deposit()">Deposit</button>
+
+    <label for="withdrawAmount">Withdraw Amount:</label>
+    <input type="text" id="withdrawAmount" placeholder="Enter amount">
+    <button onclick="withdraw()">Withdraw</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script>
+        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_INFURA_API_KEY'));
+
+        const contractAddress = '0xYourContractAddress';
+        const contractABI = [...]; 
+
+        const financeContract = new web3.eth.Contract(contractABI, contractAddress);
+
+        async function deposit() {
+            const depositAmount = document.getElementById('depositAmount').value;
+            await financeContract.methods.deposit().send({ value: depositAmount });
+            alert('Deposit successful');
+        }
+
+        async function withdraw() {
+            const withdrawAmount = document.getElementById('withdrawAmount').value;
+            await financeContract.methods.withdraw(withdrawAmount).send();
+            alert('Withdrawal successful');
+        }
+    </script>
+</body>
+</html>
